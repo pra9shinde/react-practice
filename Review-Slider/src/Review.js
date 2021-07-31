@@ -6,6 +6,32 @@ const Review = () => {
     const [index, setIndex] = useState(0);
     const { name, job, image, text } = people[index];
 
+    const checkNumber = (num) => {
+        if (num < 0) {
+            return people.length - 1;
+        } else if (num > people.length - 1) {
+            return 0;
+        } else {
+            return num;
+        }
+    };
+
+    const prevHandler = () => {
+        setIndex(checkNumber(index - 1));
+    };
+
+    const nextHandler = () => {
+        setIndex(checkNumber(index + 1));
+    };
+
+    const randomHandler = () => {
+        let random = Math.floor(Math.random() * people.length);
+        if (random === index) {
+            random++;
+        }
+        setIndex(checkNumber(random));
+    };
+
     return (
         <article className='review'>
             <div className='img-container'>
@@ -18,14 +44,16 @@ const Review = () => {
             <p className='job'>{job}</p>
             <p className='info'>{text}</p>
             <div className='button-container'>
-                <button className='prev-btn'>
+                <button className='prev-btn' onClick={prevHandler}>
                     <FaChevronLeft />
                 </button>
-                <button className='next-btn'>
+                <button className='next-btn' onClick={nextHandler}>
                     <FaChevronRight />
                 </button>
             </div>
-            <button className='random-btn'>Random</button>
+            <button className='random-btn' onClick={randomHandler}>
+                Random
+            </button>
         </article>
     );
 };
